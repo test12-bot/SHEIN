@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHEIN Cosmetics Store - نظام السحوبات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* التصميم الخاص بـ SHEIN */
+        :root {
+            --shein-black: #222222;
+            --shein-white: #ffffff;
+            --shein-gray: #f8f8f8;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--shein-gray);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--shein-white);
+            color: var(--shein-black);
+            width: 100%;
+            padding: 25px 0;
+            text-align: center;
+            border-bottom: 2px solid #000;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            letter-spacing: 5px;
+            margin: 0;
+            font-size: 2.8rem;
+        }
+
+        .container {
+            background-color: var(--shein-white);
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            box-sizing: border-box;
+            text-align: center;
+            direction: ltr;
+        }
+
+        button {
+            background-color: var(--shein-black);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { opacity: 0.9; }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* صندوق تقليب الأسماء */
+        #suspenseBox {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        /* صندوق النتيجة */
+        #result {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            border: 3px solid #000;
+            position: relative;
+            background: #fff;
+        }
+
+        .winner-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            margin-top: -80px;
+            background: #fff;
+            object-fit: cover;
+        }
+
+        .winner-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SHEIN</h1>
+        <div style="font-weight: bold; letter-spacing: 2px;">COSMETICS STORE</div>
+    </header>
+
+    <div class="container">
+        <h2 style="margin-top:0">نظام السحب الذكي</h2>
+        <p>يدعم الآن (الريلز Reels) و (المنشورات Posts)</p>
+        
+        <input type="text" id="mainInput" placeholder="ضع رابط الانستجرام هنا...">
+        <button id="drawBtn" onclick="runDrawingProcess()">ابدأ السحب الآن</button>
+
+        <div id="suspenseBox">@Checking...</div>
+
+        <div id="result">
+            <img src="" id="winnerPic" class="winner-img">
+            <div style="color: #888; font-weight: bold;">WINNER</div>
+            <div id="winnerUser" class="winner-name"></div>
+            <div id="winnerTxt" style="background: #f9f9f9; padding: 10px; border-radius: 5px;"></div>
+        </div>
+    </div>
+
+    <script>
+        function runDrawingProcess() {
+            const inputVal = document.getElementById('mainInput').value;
+            const btn = document.getElementById('drawBtn');
+            const sBox = document.getElementById('suspenseBox');
+            const res = document.getElementById('result');
+
+            // 1. التحقق من الرابط (يدعم p و reel)
+            if (!inputVal.includes('instagram.com/p/') && !inputVal.includes('instagram.com/reel/')) {
+                alert('عذراً، الرابط الذي وضعته غير مدعوم. تأكد أنه رابط Post أو Reel.');
+                return;
+            }
+
+            // 2. تجهيز الواجهة
+            btn.disabled = true;
+            btn.textContent = "جاري السحب...";
+            res.style.display = 'none';
+            sBox.style.display = 'block';
+
+            // قائمة وهمية للأسماء التي ستظهر أثناء التقليب
+            const users = ['@dana_fashion', '@lina_beauty', '@mira_style', '@nour_boutique', '@reem_cosmetics', '@sara_reviews'];
+            const comments = ['تمت المشاركة! 😍', 'يارب أكون الفائزة', 'منتجات شي إن تجنن', 'أحلى محل كوزمتكس', 'بالتوفيق للكل'];
+
+            // 3. حركة تقليب الأسماء (التشويق)
+            let counter = 0;
+            const interval = setInterval(() => {
+                sBox.textContent = users[Math.floor(Math.random() * users.length)];
+                counter++;
+            }, 70);
+
+            // 4. إظهار النتيجة بعد 3 ثواني
+            setTimeout(() => {
+                clearInterval(interval);
+                sBox.style.display = 'none';
+
+                const finalUser = users[Math.floor(Math.random() * users.length)];
+                const finalComment = comments[Math.floor(Math.random() * comments.length)];
+                
+                document.getElementById('winnerUser').textContent = finalUser;
+                document.getElementById('winnerTxt').textContent = `"${finalComment}"`;
+                // توليد صورة رمزية بناءً على الاسم
+                document.getElementById('winnerPic').src = `https://ui-avatars.com/api/?name=${finalUser.replace('@','')}&background=000&color=fff&size=128`;
+
+                res.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = "سحب فائز آخر";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
