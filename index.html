@@ -15,19 +15,19 @@
     </header>
 
     <div class="container">
-        <h2>نظام السحب الآلي</h2>
-        <p>أدخل رابط الريلز لاختيار فائز عشوائي من التعليقات مع إظهار حساب الفائز.</p>
+        <h2>نظام السحب الشامل</h2>
+        <p>أدخل رابط المنشور أو الريلز (Reel / Post) لسحب فائز عشوائي من التعليقات.</p>
         
-        <input type="text" id="reelUrl" placeholder="https://www.instagram.com/reel/...">
-        <button id="drawBtn" onclick="startDraw()">سحب الفائز الآن</button>
+        <input type="text" id="urlInput" placeholder="أدخل رابط الـ Post أو الـ Reel هنا...">
+        <button id="drawBtn" onclick="startDraw()">بدء السحب الآن</button>
 
         <div id="suspenseBox">@username</div>
 
         <div id="result">
             <img src="" alt="صورة الفائز" class="winner-image" id="winnerImg">
-            <h3 style="margin-top: 0; color: #555;">🎉 الفائز بالجائزة 🎉</h3>
+            <h3 style="margin-top: 0; color: #555;">🎉 الفائز المحظوظ 🎉</h3>
             <div class="winner-name" id="winnerName">@username</div>
-            <div class="winner-comment" id="winnerComment">"تعليق الفائز"</div>
+            <div class="winner-comment" id="winnerComment">"تعليق الفائز يظهر هنا"</div>
         </div>
     </div>
 
